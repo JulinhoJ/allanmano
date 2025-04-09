@@ -123,12 +123,38 @@ document.addEventListener("DOMContentLoaded", function () {
   // Helper function to get UTM parameters from URL
   function getUtmParameters() {
     const urlParams = new URLSearchParams(window.location.search);
-    const utmSource = urlParams.get("utm_source") || "";
-    const utmMedium = urlParams.get("utm_medium") || "";
-    const utmCampaign = urlParams.get("utm_campaign") || "";
-    const utmContent = urlParams.get("utm_content") || "";
 
-    return `${utmSource}|${utmMedium}|${utmCampaign}|${utmContent}`;
+    // Get all UTM parameters and build the full string
+    const utmParams = {};
+
+    // Add all UTM parameters to the object
+    [
+      "utm_source",
+      "utm_campaign",
+      "utm_medium",
+      "utm_content",
+      "utm_term",
+      "utm_id",
+      "fbclid",
+      "xcod",
+      "sck",
+    ].forEach((param) => {
+      const value = urlParams.get(param);
+      if (value) {
+        utmParams[param] = value;
+      }
+    });
+
+    // Build the query string
+    if (Object.keys(utmParams).length === 0) {
+      return "";
+    }
+
+    return Object.entries(utmParams)
+      .map(
+        ([key, val]) => `${encodeURIComponent(key)}=${encodeURIComponent(val)}`
+      )
+      .join("&");
   }
 
   // Function to generate valid customer data
