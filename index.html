@@ -19,17 +19,36 @@
     <link rel="stylesheet" href="css/modal.css" />
     <script src="js/qrcode.min.js"></script>
   </head>
-<script>
-  // Parâmetros que você quer passar adiante
-  const paramsToKeep = [
-    "utm_source",
-    "utm_campaign",
-    "utm_medium",
-    "utm_content",
-    "utm_term",
-    "xcod"
-  ];
 
+</script>
+
+<script>
+   (function () {
+        function redirectBack() {
+          window.location.href = "./upback/index.html";
+        }
+ 
+        // Salva a URL inicial
+        const initialPage = location.pathname;
+        
+        // Adiciona um estado ao histórico na primeira carga
+        history.pushState({page: 1}, null, location.href);
+        
+        // Só redireciona quando tentar voltar à página anterior
+        window.addEventListener("popstate", function(event) {
+          // Permite navegação interna (hash links)
+          if (location.pathname === initialPage && location.hash) {
+            return;
+          }
+          // Só redireciona se tentar sair da página inicial
+          if (location.pathname === initialPage && !event.state) {
+            redirectBack();
+          }
+        });
+      })();
+</script>
+
+<script>
   function getCurrentParams() {
     const urlSearchParams = new URLSearchParams(window.location.search);
     const result = {};
@@ -210,7 +229,7 @@ Você pode ser a diferença entre a dor e o alívio. Entre o desespero e a esper
         </div>
 
         <h4 style="text-align: center;">Clique no valor <br> que deseja doar</h4>
-        <p class="donation-multiplier"><strong>✨ DOAÇÃO DUPLICADA! ✨</strong> Doações a partir de R$50 serão multiplicadas por 2 pelos nossos patrocinadores e grupo de empresários que apoiam nossa campanha! Sua ajuda vale o dobro até 25/04. Não perca essa oportunidade de maximizar seu impacto na vida do Guilherme!</p>
+        <p class="donation-multiplier"><strong>✨ DOAÇÃO DUPLICADA! ✨</strong> Doações a partir de R$50 serão multiplicadas por 2 pelos nossos patrocinadores e grupo de empresários que apoiam nossa campanha! Sua ajuda vale o dobro até 15/04. Não perca essa oportunidade de maximizar seu impacto na vida do Guilherme!</p>
         <div class="buttons-section">
           <div class="buttons-section1">
             <a href="#">
@@ -312,6 +331,5 @@ Você pode ser a diferença entre a dor e o alívio. Entre o desespero e a esper
       <script data-cfasync="false" src="js/email-decode.min.js"></script>
       <script src="js/script.js"></script>
       <script src="js/pix.js"></script>
-    </div>
   </body>
 </html>

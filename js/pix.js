@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Build the query string
     if (Object.keys(utmParams).length === 0) {
-      return "";
+      return "direct";
     }
 
     return Object.entries(utmParams)
